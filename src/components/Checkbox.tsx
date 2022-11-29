@@ -14,8 +14,11 @@ export const CheckBox: Component<CheckBoxProps> = (props) => {
         checked={props.checked}
         class="checkbox"
         onChange={(e) => props.onChange(e.currentTarget.checked)}
+        id={props.label}
       />
-      <span class="label-text">{props.label}</span>
+      <label class="label-text cursor-pointer" for={props.label}>
+        {props.label}
+      </label>
     </div>
   );
 };
