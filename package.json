@@ -1,0 +1,37 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite --port 9999",
+    "dev": "vite --port 9999",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .jsx,.js,.tsx,.ts src/",
+    "fmt": "prettier --write src/**/*"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.45.0",
+    "@typescript-eslint/parser": "5.45.0",
+    "autoprefixer": "10.4.13",
+    "eslint": "8.28.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-solid": "0.9.1",
+    "postcss": "8.4.19",
+    "prettier": "2.8.0",
+    "tailwindcss": "3.2.4",
+    "typescript": "4.9.3",
+    "vite": "3.2.4",
+    "vite-plugin-solid": "2.4.0",
+    "vite-tsconfig-paths": "3.6.0"
+  },
+  "dependencies": {
+    "daisyui": "2.42.1",
+    "dayjs": "1.11.6",
+    "solid-app-router": "0.4.2",
+    "solid-icons": "1.0.4",
+    "solid-js": "1.6.2"
+  }
+}
