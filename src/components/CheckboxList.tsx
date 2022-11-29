@@ -19,6 +19,7 @@ export const CheckboxList: Component<CheckboxListProps> = (props) => {
       if (!findSelectedId(id)) {
         ids.push(id);
       }
+      ids.sort();
       return ids;
     });
   };
@@ -43,7 +44,6 @@ export const CheckboxList: Component<CheckboxListProps> = (props) => {
             label={item.prefName}
             checked={findSelectedId(item.prefCode)}
             onChange={(checked: boolean) => {
-              console.log(item.prefName, checked);
               if (checked) {
                 addSelectedId(item.prefCode);
               } else {
