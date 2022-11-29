@@ -3,3 +3,5 @@ dist
 configurationCache.log
 dryrun.log
 targets.log
+
+.env
