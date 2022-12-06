@@ -12,7 +12,7 @@ export const CheckBox: Component<CheckBoxProps> = (props) => {
       <input
         type="checkbox"
         checked={props.checked}
-        class="checkbox"
+        class="checkbox checkbox-primary border-zinc-400 hover:border-zinc-200 border-2"
         onChange={(e) => props.onChange(e.currentTarget.checked)}
         id={props.label}
       />

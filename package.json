@@ -28,8 +28,10 @@
     "vite-tsconfig-paths": "3.6.0"
   },
   "dependencies": {
+    "apexcharts": "^3.36.3",
     "daisyui": "2.42.1",
     "dayjs": "1.11.6",
+    "solid-apexcharts": "^0.2.3",
     "solid-app-router": "0.4.2",
     "solid-icons": "1.0.4",
     "solid-js": "1.6.2"
