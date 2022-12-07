@@ -1,5 +1,5 @@
 import { Component, createResource, createSignal, Show } from 'solid-js';
-import { fetchPrefectures, Prefecture } from '@apis/fetchers';
+import { fetchPrefectures, Prefecture, fetchPopulation } from '@apis/fetchers';
 import { CheckboxList } from '@components/CheckboxList';
 import { Chart } from '@components/Chart';
 
@@ -8,6 +8,7 @@ export const TogPage: Component = () => {
     fetchPrefectures
   );
   const [selectedIds, setSelectedIds] = createSignal<number[]>([]);
+  const [populations] = createResource(selectedIds, fetchPopulation);
 
   return (
     <>
@@ -22,7 +23,7 @@ export const TogPage: Component = () => {
             />
           </div>
           <div class="w-4/5">
-            <Chart />
+            <Chart populations={populations} />
           </div>
         </div>
       </Show>

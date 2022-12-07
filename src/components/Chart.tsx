@@ -1,16 +1,27 @@
 import { createStore } from 'solid-js/store';
 
 import { SolidApexCharts } from 'solid-apexcharts';
-import { Component } from 'solid-js';
+import { Component, createEffect } from 'solid-js';
 import { ApexOptions } from 'apexcharts';
+import { Population } from '@apis/fetchers';
+import { Resource } from 'solid-js';
 
-export const Chart: Component = () => {
+interface ChartProps {
+  populations: Resource<Population[]>;
+}
+
+type SeriesItem = { name: string; data: number[] };
+
+export const Chart: Component<ChartProps> = (props) => {
   const [options] = createStore<ApexOptions>({
     chart: {
       id: 'solidchart-example',
     },
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+      categories: [
+        1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015,
+        2020, 2025, 2030, 2035, 2040, 2045,
+      ],
       labels: {
         style: {
           cssClass: 'fill-zinc-200',
@@ -24,15 +35,42 @@ export const Chart: Component = () => {
         },
       },
     },
+    legend: {
+      labels: {
+        colors: '#e4e4e7',
+      },
+    },
   });
-  const [series] = createStore({
+  const [series, setSeries] = createStore<{ list: SeriesItem[] }>({
     list: [
       {
-        name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91],
+        name: '',
+        data: [],
       },
     ],
   });
+
+  createEffect(() => {
+    createSeries(props.populations() || []);
+  });
+
+  const createSeries = (populations: Population[]) => {
+    const newSeries: SeriesItem[] = [];
+    if (populations.length <= 0) {
+      setSeries({
+        list: newSeries,
+      });
+    }
+    populations.forEach((p, i) => {
+      newSeries.push({
+        name: `series-${i}`,
+        data: p.data.map(({ value }) => value),
+      });
+    });
+    setSeries({
+      list: newSeries,
+    });
+  };
 
   return (
     <div class="w-full p-4 mt-16 text-zinc-800">
