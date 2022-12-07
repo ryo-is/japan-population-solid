@@ -4,14 +4,14 @@ import { CheckboxList } from '@components/CheckboxList';
 import { Chart } from '@components/Chart';
 
 export const TogPage: Component = () => {
-  const [prefectures] = createResource<{ result: Prefecture[] }>(
-    fetchPrefectures
-  );
-  const [selectedIds, setSelectedIds] = createSignal<number[]>([]);
-  const [populations] = createResource(selectedIds, fetchPopulation);
+  const [prefectures] = createResource<Prefecture[]>(fetchPrefectures);
+  const [selectedPrefectures, setSelectedPrefectures] = createSignal<
+    Prefecture[]
+  >([]);
+  const [populations] = createResource(selectedPrefectures, fetchPopulation);
 
   const clearAllSelectedIds = () => {
-    setSelectedIds([]);
+    setSelectedPrefectures([]);
   };
 
   return (
@@ -21,14 +21,14 @@ export const TogPage: Component = () => {
           <div class="w-1/5">
             <div class="mb-4 flex justify-between items-center">
               <div>Prefectures</div>
-              <div class="btn btn-primary" onClick={clearAllSelectedIds}>
+              <div class="btn btn-info" onClick={clearAllSelectedIds}>
                 Clear All
               </div>
             </div>
             <CheckboxList
-              listItems={prefectures()?.result || []}
-              selectedIds={selectedIds}
-              setSelectedIds={setSelectedIds}
+              listItems={prefectures}
+              selectedPrefectures={selectedPrefectures}
+              setSelectedPrefectures={setSelectedPrefectures}
             />
           </div>
           <div class="w-4/5">

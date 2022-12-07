@@ -61,9 +61,9 @@ export const Chart: Component<ChartProps> = (props) => {
         list: newSeries,
       });
     }
-    populations.forEach((p, i) => {
+    populations.forEach((p) => {
       newSeries.push({
-        name: `series-${i}`,
+        name: p.label,
         data: p.data.map(({ value }) => value),
       });
     });

@@ -4,45 +4,40 @@ export type Population = {
   data: Array<{ year: number; value: number }>;
 };
 
-export const fetchPrefectures = async () =>
-  (
-    await fetch('https://opendata.resas-portal.go.jp/api/v1/prefectures', {
+export const fetchPrefectures = async () => {
+  const res = await fetch(
+    'https://opendata.resas-portal.go.jp/api/v1/prefectures',
+    {
       headers: {
         'X-API-KEY': import.meta.env.VITE_API_KEY,
       },
-    })
-  ).json();
+    }
+  );
+  const { result } = await res.json();
+  return result;
+};
 
-export const fetchPopulation = async (prefCodes: number[]) => {
+export const fetchPopulation = async (prefectures: Prefecture[]) => {
   const populations: Population[] = [];
-  if (prefCodes.length <= 0) {
+  if (prefectures.length <= 0) {
     return populations;
   }
 
-  const fetchPromises: Promise<Response>[] = [];
-
-  prefCodes.forEach((code) => {
-    fetchPromises.push(
-      fetch(
-        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${code}`,
-        {
-          headers: {
-            'X-API-KEY': import.meta.env.VITE_API_KEY,
-          },
-        }
-      )
+  for (const pref of prefectures) {
+    const res = await fetch(
+      `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${pref.prefCode}`,
+      {
+        headers: {
+          'X-API-KEY': import.meta.env.VITE_API_KEY,
+        },
+      }
     );
-  });
-  const res = await Promise.all(fetchPromises);
+    const { result } = await res.json();
+    populations.push({
+      ...result.data[0],
+      label: pref.prefName,
+    });
+  }
 
-  const jsonPromises: Promise<{ result: { data: Population[] } }>[] = [];
-  res.forEach((value) => {
-    jsonPromises.push(value.json());
-  });
-  const jsonResponses = await Promise.all(jsonPromises);
-  jsonResponses.forEach(({ result }) => {
-    populations.push(result.data[0]);
-  });
-  console.log(populations);
   return populations;
 };
