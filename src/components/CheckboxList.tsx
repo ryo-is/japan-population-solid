@@ -20,23 +20,32 @@ export const CheckboxList: Component<CheckboxListProps> = (props) => {
   };
 
   const addSelectedId = (id: number) => {
-    const prefecture = props.listItems()?.find((item) => item.prefCode === id);
-    if (prefecture) {
-      props.setSelectedPrefectures((prev) => {
-        const ids = [...prev, prefecture];
-        ids.sort();
-        return ids;
-      });
+    const idx = props
+      .selectedPrefectures()
+      ?.findIndex((item) => item.prefCode === id);
+    if (idx < 0) {
+      const prefecture = props
+        .listItems()
+        ?.find((item) => item.prefCode === id);
+      if (prefecture) {
+        props.setSelectedPrefectures((prev) => {
+          const prefs = [...prev, prefecture];
+          return prefs;
+        });
+      }
     }
   };
 
   const removeSelectedId = (id: number) => {
-    const idx = props.listItems()?.findIndex((item) => item.prefCode === id);
-    if (idx && idx >= 0) {
+    const idx = props
+      .selectedPrefectures()
+      ?.findIndex((item) => item.prefCode === id);
+    if (idx >= 0) {
       props.setSelectedPrefectures((prev) => {
-        const ids = [...prev];
-        ids.splice(idx, 1);
-        return ids;
+        const prefs = [...prev];
+        prefs.splice(idx, 1);
+        console.log({ prefs });
+        return prefs;
       });
     }
   };

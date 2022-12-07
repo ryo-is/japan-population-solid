@@ -18,6 +18,7 @@ export const fetchPrefectures = async () => {
 };
 
 export const fetchPopulation = async (prefectures: Prefecture[]) => {
+  console.log({ prefectures });
   const populations: Population[] = [];
   if (prefectures.length <= 0) {
     return populations;
