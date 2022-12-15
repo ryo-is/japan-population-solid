@@ -16,6 +16,9 @@ export const Chart: Component<ChartProps> = (props) => {
   const [options] = createStore<ApexOptions>({
     chart: {
       id: 'solidchart-example',
+      animations: {
+        enabled: false,
+      },
     },
     xaxis: {
       categories: [
